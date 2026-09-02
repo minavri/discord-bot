@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Discord Message Builder V3</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<main class="app">
+  <header>
+    <div>
+      <p class="eyebrow">DISCORD TOOL · V3</p>
+      <h1>Message Builder</h1>
+      <p class="sub">Plusieurs messages + tickets avec sélecteur.</p>
+    </div>
+    <div id="status" class="status">Connexion…</div>
+  </header>
+
+  <div class="messageTabs">
+    <div id="messageTabs"></div>
+    <button id="addMessage" class="secondary">+ Nouveau message</button>
+  </div>
+
+  <section class="grid">
+    <div class="panel">
+      <h2>Destination</h2>
+      <div class="two">
+        <label>Serveur<select id="guild"></select></label>
+        <label>Salon<select id="channel"></select></label>
+      </div>
+
+      <h2>Message</h2>
+      <label>Contenu<textarea id="content" rows="4" placeholder="Ton message…"></textarea></label>
+
+      <div class="sectionHead">
+        <h2>Embed</h2>
+        <label class="switchLine"><input id="embedEnabled" type="checkbox"> Activer</label>
+      </div>
+      <div id="embedFields">
+        <div class="two">
+          <label>Titre<input id="embedTitle"></label>
+          <label>Couleur<input id="embedColor" type="color" value="#5865F2"></label>
+        </div>
+        <label>Description<textarea id="embedDescription" rows="4"></textarea></label>
+        <div class="two">
+          <label>Image URL<input id="embedImage" placeholder="https://…"></label>
+          <label>Miniature URL<input id="embedThumbnail" placeholder="https://…"></label>
+        </div>
+        <label>Footer<input id="embedFooter"></label>
+      </div>
+
+      <div class="sectionHead">
+        <h2>Boutons</h2>
+        <button id="addButton" class="secondary">+ Bouton</button>
+      </div>
+      <div id="buttons"></div>
+
+      <div class="sectionHead">
+        <h2>Menus classiques</h2>
+        <button id="addSelect" class="secondary">+ Menu</button>
+      </div>
+      <div id="selects"></div>
+
+      <button id="sendAll" class="primary">Envoyer tous les messages</button>
+      <p id="result" class="result"></p>
+    </div>
+
+    <aside class="panel previewPanel">
+      <h2>Aperçu du message actuel</h2>
+      <div class="discord">
+        <div class="avatar">B</div>
+        <div class="messageWrap">
+          <div class="author">Mon Bot <span>BOT</span></div>
+          <div id="previewContent" class="msg"></div>
+          <div id="previewEmbed"></div>
+          <div id="previewComponents"></div>
+        </div>
+      </div>
+    </aside>
+  </section>
+</main>
+<script src="/app.js"></script>
+</body>
+</html>
