@@ -30,6 +30,10 @@ const app = express();
 app.use(express.json({ limit: '2mb' }));
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+});
+
 const dataDir = path.join(__dirname, '..', 'data');
 const actionsFile = path.join(dataDir, 'actions.json');
 
