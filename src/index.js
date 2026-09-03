@@ -65,8 +65,8 @@ function styleOf(style) {
 
 client.once('clientReady', () => {
   console.log(`Bot connecté : ${client.user.tag}`);
-  app.listen(PORT, '127.0.0.1', () => {
-    console.log(`Interface : http://127.0.0.1:${PORT}`);
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Interface démarrée sur le port ${PORT}`);
   });
 });
 
