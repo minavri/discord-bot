@@ -27,16 +27,46 @@ async function load(){
   renderAll();
 }
 async function loadGuild(guildId){
-  const [channels,cats,roles]=await Promise.all([
-    api(`/api/guilds/${guildId}/channels`),
-    api(`/api/guilds/${guildId}/categories`),
-    api(`/api/guilds/${guildId}/roles`)
-  ]);
-  state.channels=channels;state.categories=cats;state.roles=roles;
-  $('channel').innerHTML=channels.map(c=>`<option value="${c.id}"># ${esc(c.name)}</option>`).join('');
-  if(!cur().channelId && channels[0])cur().channelId=channels[0].id;
-}
+  try {
+    const channels = await api(`/api/guilds/${guildId}/channels`);
 
+    state.channels = channels;
+
+    $('channel').innerHTML = channels.length
+      ? channels.map(c =>
+          `<option value="${c.id}"># ${esc(c.name)}</option>`
+        ).join('')
+      : '<option value="">Aucun salon trouvé</option>';
+
+    if (channels[0] && !channels.some(c => c.id === cur().channelId)) {
+      cur().channelId = channels[0].id;
+    }
+
+    $('channel').value = cur().channelId || '';
+
+  } catch (e) {
+    console.error('Erreur salons :', e);
+    state.channels = [];
+    $('channel').innerHTML =
+      '<option value="">Erreur de chargement des salons</option>';
+  }
+
+  try {
+    state.categories =
+      await api(`/api/guilds/${guildId}/categories`);
+  } catch (e) {
+    console.error('Erreur catégories :', e);
+    state.categories = [];
+  }
+
+  try {
+    state.roles =
+      await api(`/api/guilds/${guildId}/roles`);
+  } catch (e) {
+    console.error('Erreur rôles :', e);
+    state.roles = [];
+  }
+}
 function saveFields(){
   const m=cur();
   m.guildId=$('guild').value;
