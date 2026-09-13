@@ -3,51 +3,961 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
 <title>Discord Tool V4</title>
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0}:root{--bg:#0b0c10;--panel:#15171d;--text:#f5f7ff;--muted:#9499aa;--blue:#5865f2;--purple:#7c5cff;--border:#292d38;--danger:#ed4245}body{font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}.app{display:flex;min-height:100vh}aside{width:250px;background:#101116;border-right:1px solid var(--border);padding:24px 16px}.logo{font-size:22px;font-weight:800;margin:0 10px 28px}.logo span{color:#7289ff}nav button{width:100%;border:0;background:transparent;color:var(--muted);padding:13px 14px;border-radius:10px;text-align:left;font-size:15px;margin-bottom:7px;cursor:pointer}nav button:hover,nav button.active{background:#20232d;color:#fff}nav button.active{box-shadow:inset 3px 0 0 var(--blue)}main{flex:1;padding:32px;max-width:1300px}h1{font-size:28px;margin-bottom:7px}.subtitle{color:var(--muted);margin-bottom:20px}.status{margin-bottom:20px;color:var(--muted);font-size:14px}.status.ok{color:#6ee7a2}.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:20px}.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px}.card h2{font-size:17px;margin-bottom:12px}label{display:block;color:#c8cbd5;font-size:13px;margin:12px 0 7px}input,textarea,select{width:100%;background:#0f1116;border:1px solid #303440;color:white;border-radius:9px;padding:11px;outline:none}textarea{min-height:110px;resize:vertical}input:focus,textarea:focus,select:focus{border-color:var(--blue)}input[type=checkbox]{width:auto;margin-right:8px}input[type=color]{height:44px;padding:4px}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.row3{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end}.ticketGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.optionRow{display:grid;grid-template-columns:1fr 1fr 1.4fr auto;gap:8px;align-items:end;margin-top:10px}.ticketType{background:#111318;border:1px solid #303440;border-radius:10px;padding:12px;margin-top:12px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}.send{border:0;border-radius:9px;padding:12px 14px;font-weight:700;color:white;background:linear-gradient(90deg,var(--blue),var(--purple));cursor:pointer;width:100%}button.secondary{border:1px solid #3b4050;background:#20232d;color:white;border-radius:9px;padding:10px 13px;cursor:pointer}button.danger{border:0;background:var(--danger);color:white;border-radius:8px;padding:10px 12px;cursor:pointer}.msgTabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.msgTab{border:1px solid #303440;background:#111318;color:#c8cbd5;border-radius:9px;padding:9px 12px;cursor:pointer}.msgTab.active{background:#23273b;color:#fff;border-color:var(--blue)}.previewWrap{position:sticky;top:20px}.previewBox{background:#111318;border-radius:9px;padding:15px}#previewContent{white-space:pre-wrap;line-height:1.45;margin-bottom:10px}.embedPreview{border-left:4px solid var(--blue);background:#0d0f14;border-radius:5px;padding:12px;margin-top:10px}.embedPreview h3{margin-bottom:6px}.embedPreview p{white-space:pre-wrap;color:#d7dae4}.componentRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.dcButton{background:#5865f2;border-radius:5px;padding:8px 12px;font-size:14px}.result{margin-top:12px;color:#aeb3c2}.section{display:none}.section.active{display:block}.placeholder{color:var(--muted)}@media(max-width:900px){.grid{grid-template-columns:1fr}.previewWrap{position:static}}@media(max-width:800px){aside{width:80px}.logo{font-size:0}.logo:after{content:"V4";font-size:20px}nav button{font-size:0;text-align:center}nav button:before{content:"•";font-size:22px}main{padding:20px}.two,.row3,.ticketGrid,.optionRow{grid-template-columns:1fr}}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+:root{
+  --bg:#0b0c10;
+  --panel:#15171d;
+  --text:#f5f7ff;
+  --muted:#9499aa;
+  --blue:#5865f2;
+  --purple:#7c5cff;
+  --border:#292d38;
+  --danger:#ed4245;
+}
+
+body{
+  font-family:Inter,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+
+.app{
+  display:flex;
+  min-height:100vh;
+}
+
+/* SIDEBAR */
+
+aside{
+  width:250px;
+  background:#101116;
+  border-right:1px solid var(--border);
+  padding:24px 16px;
+}
+
+.logo{
+  font-size:22px;
+  font-weight:800;
+  margin:0 10px 28px;
+}
+
+.logo span{
+  color:#7289ff;
+}
+
+nav button{
+  width:100%;
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  padding:13px 14px;
+  border-radius:10px;
+  text-align:left;
+  font-size:15px;
+  margin-bottom:7px;
+  cursor:pointer;
+}
+
+nav button:hover,
+nav button.active{
+  background:#20232d;
+  color:#fff;
+}
+
+nav button.active{
+  box-shadow:inset 3px 0 0 var(--blue);
+}
+
+/* PAGE */
+
+main{
+  flex:1;
+  padding:32px;
+  max-width:1300px;
+}
+
+h1{
+  font-size:28px;
+  margin-bottom:7px;
+}
+
+.subtitle{
+  color:var(--muted);
+  margin-bottom:20px;
+}
+
+.status{
+  margin-bottom:20px;
+  color:var(--muted);
+  font-size:14px;
+}
+
+.status.ok{
+  color:#6ee7a2;
+}
+
+.section{
+  display:none;
+}
+
+.section.active{
+  display:block;
+}
+
+/* GRILLES */
+
+.grid{
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:20px;
+}
+
+.two{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.row3{
+  display:grid;
+  grid-template-columns:1fr 1fr auto;
+  gap:10px;
+  align-items:end;
+}
+
+.ticketGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.optionRow{
+  display:grid;
+  grid-template-columns:1fr 1fr 1.4fr auto;
+  gap:8px;
+  align-items:end;
+  margin-top:10px;
+}
+
+/* CARTES */
+
+.card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:20px;
+  margin-bottom:16px;
+}
+
+.card h2{
+  font-size:17px;
+  margin-bottom:12px;
+}
+
+/* FORMULAIRES */
+
+label{
+  display:block;
+  color:#c8cbd5;
+  font-size:13px;
+  margin:12px 0 7px;
+}
+
+input,
+textarea,
+select{
+  width:100%;
+  background:#0f1116;
+  border:1px solid #303440;
+  color:white;
+  border-radius:9px;
+  padding:11px;
+  outline:none;
+}
+
+textarea{
+  min-height:110px;
+  resize:vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+  border-color:var(--blue);
+}
+
+input[type="checkbox"]{
+  width:auto;
+  margin-right:8px;
+}
+
+input[type="color"]{
+  height:44px;
+  padding:4px;
+}
+
+/* BOUTONS */
+
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:14px 0;
+}
+
+.send{
+  border:0;
+  border-radius:9px;
+  padding:12px 14px;
+  font-weight:700;
+  color:white;
+  background:linear-gradient(90deg,var(--blue),var(--purple));
+  cursor:pointer;
+  width:100%;
+}
+
+button.secondary{
+  border:1px solid #3b4050;
+  background:#20232d;
+  color:white;
+  border-radius:9px;
+  padding:10px 13px;
+  cursor:pointer;
+}
+
+button.danger{
+  border:0;
+  background:var(--danger);
+  color:white;
+  border-radius:8px;
+  padding:10px 12px;
+  cursor:pointer;
+}
+
+/* MESSAGES */
+
+.msgTabs{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:14px;
+}
+
+.msgTab{
+  border:1px solid #303440;
+  background:#111318;
+  color:#c8cbd5;
+  border-radius:9px;
+  padding:9px 12px;
+  cursor:pointer;
+}
+
+.msgTab.active{
+  background:#23273b;
+  color:#fff;
+  border-color:var(--blue);
+}
+
+/* APERÇU */
+
+.previewWrap{
+  position:sticky;
+  top:20px;
+}
+
+.previewBox{
+  background:#111318;
+  border-radius:9px;
+  padding:15px;
+}
+
+#previewContent{
+  white-space:pre-wrap;
+  line-height:1.45;
+  margin-bottom:10px;
+}
+
+.embedPreview{
+  border-left:4px solid var(--blue);
+  background:#0d0f14;
+  border-radius:5px;
+  padding:12px;
+  margin-top:10px;
+}
+
+.embedPreview h3{
+  margin-bottom:6px;
+}
+
+.embedPreview p{
+  white-space:pre-wrap;
+  color:#d7dae4;
+}
+
+.componentRow{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+
+.dcButton{
+  background:#5865f2;
+  color:#fff;
+  border-radius:5px;
+  padding:8px 12px;
+  font-size:14px;
+}
+
+.ticketType{
+  background:#111318;
+  border:1px solid #303440;
+  border-radius:10px;
+  padding:12px;
+  margin-top:12px;
+}
+
+.result{
+  margin-top:12px;
+  color:#aeb3c2;
+}
+
+.placeholder{
+  color:var(--muted);
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .previewWrap{
+    position:static;
+  }
+
+}
+
+@media(max-width:800px){
+
+  aside{
+    width:80px;
+  }
+
+  .logo{
+    font-size:0;
+  }
+
+  .logo:after{
+    content:"V4";
+    font-size:20px;
+  }
+
+  nav button{
+    font-size:0;
+    text-align:center;
+  }
+
+  nav button:before{
+    content:"•";
+    font-size:22px;
+  }
+
+  main{
+    padding:20px;
+  }
+
+  .two,
+  .row3,
+  .ticketGrid,
+  .optionRow{
+    grid-template-columns:1fr;
+  }
+
+}
 </style>
 </head>
+
 <body>
+
 <div class="app">
-<aside><div class="logo">Discord <span>Tool V4</span></div><nav>
-<button class="active" data-page="message">💬 Message</button>
-<button data-page="ticket">🎫 Tickets</button>
-<button data-page="welcome">👋 Arrivée / Départ</button>
-<button data-page="settings">⚙️ Paramètres</button>
-</nav></aside>
+
+<!-- MENU -->
+
+<aside>
+
+<div class="logo">
+Discord <span>Tool V4</span>
+</div>
+
+<nav>
+
+<button class="active" data-page="message">
+💬 Message
+</button>
+
+<button data-page="ticket">
+🎫 Tickets
+</button>
+
+<button data-page="welcome">
+👋 Arrivée / Départ
+</button>
+
+<button data-page="settings">
+⚙️ Paramètres
+</button>
+
+</nav>
+
+</aside>
+
+
 <main>
+
+<!-- ===================== -->
+<!-- MESSAGE -->
+<!-- ===================== -->
+
 <section id="message" class="section active">
-<h1>Créer un message</h1><p class="subtitle">Message, embed, boutons, sélecteurs et tickets.</p>
-<div id="status" class="status">Connexion au bot…</div>
+
+<h1>Créer un message</h1>
+
+<p class="subtitle">
+Crée des messages, embeds, boutons et sélecteurs Discord.
+</p>
+
+<div id="status" class="status">
+Connexion au bot…
+</div>
+
 <div id="messageTabs" class="msgTabs"></div>
-<div class="actions"><button id="addMessage" class="secondary">+ Ajouter un message</button></div>
-<div class="grid"><div>
-<div class="card"><h2>Contenu</h2>
-<label>Serveur Discord</label><select id="guild"></select>
-<label>Salon</label><select id="channel"></select>
-<label>Message</label><textarea id="content" placeholder="Écris ton message ici..."></textarea>
+
+<div class="actions">
+
+<button id="addMessage" class="secondary">
++ Ajouter un message
+</button>
+
 </div>
-<div class="card"><h2>Embed</h2>
-<label><input type="checkbox" id="embedEnabled"> Activer l'embed</label>
-<div class="two"><div><label>Titre</label><input id="embedTitle"></div><div><label>Couleur</label><input type="color" id="embedColor" value="#5865F2"></div></div>
-<label>Description</label><textarea id="embedDescription"></textarea>
-<div class="two"><div><label>Image URL</label><input id="embedImage" placeholder="https://..."></div><div><label>Miniature URL</label><input id="embedThumbnail" placeholder="https://..."></div></div>
-<label>Footer</label><input id="embedFooter">
+
+
+<div class="grid">
+
+<div>
+
+<!-- CONTENU -->
+
+<div class="card">
+
+<h2>Contenu</h2>
+
+<label>Serveur Discord</label>
+
+<select id="guild"></select>
+
+
+<label>Salon</label>
+
+<select id="channel"></select>
+
+
+<label>Message</label>
+
+<textarea
+id="content"
+placeholder="Écris ton message ici..."
+></textarea>
+
 </div>
-<div class="card"><h2>Boutons / Tickets</h2><p class="placeholder">Ajoute un bouton puis choisis l'action Ticket + sélecteur pour créer les types de tickets.</p><div class="actions"><button id="addButton" class="secondary">+ Ajouter un bouton</button></div><div id="buttons"></div></div>
-<div class="card"><h2>Sélecteurs</h2><div class="actions"><button id="addSelect" class="secondary">+ Ajouter un sélecteur</button></div><div id="selects"></div></div>
-<button id="sendAll" class="send">Envoyer le(s) message(s)</button><div id="result" class="result"></div>
+
+
+<!-- EMBED -->
+
+<div class="card">
+
+<h2>Embed</h2>
+
+<label>
+
+<input
+type="checkbox"
+id="embedEnabled"
+>
+
+Activer l'embed
+
+</label>
+
+
+<div class="two">
+
+<div>
+
+<label>Titre</label>
+
+<input
+id="embedTitle"
+placeholder="Titre de l'embed"
+>
+
 </div>
-<div class="previewWrap"><div class="card"><h2>Aperçu Discord</h2><div class="previewBox"><div id="previewContent"></div><div id="previewEmbed"></div><div id="previewComponents"></div></div></div></div>
+
+
+<div>
+
+<label>Couleur</label>
+
+<input
+type="color"
+id="embedColor"
+value="#5865F2"
+>
+
 </div>
+
+</div>
+
+
+<label>Description</label>
+
+<textarea
+id="embedDescription"
+placeholder="Description"
+></textarea>
+
+
+<div class="two">
+
+<div>
+
+<label>Image URL</label>
+
+<input
+id="embedImage"
+placeholder="https://..."
+>
+
+</div>
+
+
+<div>
+
+<label>Miniature URL</label>
+
+<input
+id="embedThumbnail"
+placeholder="https://..."
+>
+
+</div>
+
+</div>
+
+
+<label>Footer</label>
+
+<input
+id="embedFooter"
+placeholder="Footer"
+>
+
+</div>
+
+
+<!-- BOUTONS NORMAUX -->
+
+<div class="card">
+
+<h2>Boutons</h2>
+
+<p class="placeholder">
+Ajoute des boutons normaux à ton message.
+</p>
+
+<div class="actions">
+
+<button
+id="addButton"
+class="secondary"
+>
++ Ajouter un bouton
+</button>
+
+</div>
+
+<div id="buttons"></div>
+
+</div>
+
+
+<!-- SELECTEURS NORMAUX -->
+
+<div class="card">
+
+<h2>Sélecteurs</h2>
+
+<p class="placeholder">
+Ajoute un menu déroulant à ton message.
+</p>
+
+<div class="actions">
+
+<button
+id="addSelect"
+class="secondary"
+>
++ Ajouter un sélecteur
+</button>
+
+</div>
+
+<div id="selects"></div>
+
+</div>
+
+
+<button
+id="sendAll"
+class="send"
+>
+Envoyer le(s) message(s)
+</button>
+
+<div
+id="result"
+class="result"
+></div>
+
+</div>
+
+
+<!-- APERÇU -->
+
+<div class="previewWrap">
+
+<div class="card">
+
+<h2>Aperçu Discord</h2>
+
+<div class="previewBox">
+
+<div id="previewContent"></div>
+
+<div id="previewEmbed"></div>
+
+<div id="previewComponents"></div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 </section>
-<section id="ticket" class="section"><h1>Tickets</h1><p class="subtitle">Les tickets se configurent dans Message.</p><div class="card"><p>Va dans <strong>Message</strong> → <strong>+ Ajouter un bouton</strong> → Action → <strong>Ticket + sélecteur</strong>.</p></div></section>
-<section id="welcome" class="section"><h1>Arrivée / Départ</h1><p class="subtitle">Cette partie sera reconnectée ensuite.</p><div class="card"><p class="placeholder">Pour l'instant, laisse cette partie comme ça.</p></div></section>
-<section id="settings" class="section"><h1>Paramètres</h1><p class="subtitle">Les serveurs viennent directement de Discord.</p><div class="card"><p>Choisis ton serveur dans la page Message.</p></div></section>
-</main></div>
+
+
+
+<!-- ===================== -->
+<!-- TICKETS -->
+<!-- ===================== -->
+
+<section
+id="ticket"
+class="section"
+>
+
+<h1>Tickets</h1>
+
+<p class="subtitle">
+Configure ton système de tickets Discord.
+</p>
+
+
+<div class="grid">
+
+<div>
+
+
+<!-- PANNEAU -->
+
+<div class="card">
+
+<h2>Panneau de tickets</h2>
+
+
+<label>Serveur Discord</label>
+
+<select id="ticketGuild"></select>
+
+
+<label>Salon où envoyer le panneau</label>
+
+<select id="ticketChannel"></select>
+
+
+<label>Message</label>
+
+<textarea id="ticketMessage">
+Besoin d'aide ? Clique sur le bouton pour ouvrir un ticket.
+</textarea>
+
+
+<div class="two">
+
+<div>
+
+<label>Texte du bouton</label>
+
+<input
+id="ticketButtonLabel"
+value="Ouvrir un ticket"
+>
+
+</div>
+
+
+<div>
+
+<label>Emoji</label>
+
+<input
+id="ticketButtonEmoji"
+value="🎫"
+>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- TYPES -->
+
+<div class="card">
+
+<h2>Types de tickets</h2>
+
+<p class="placeholder">
+Exemple : Support, Achat, Partenariat...
+</p>
+
+<div class="actions">
+
+<button
+id="addTicketType"
+class="secondary"
+>
++ Ajouter un type de ticket
+</button>
+
+</div>
+
+<div id="ticketTypes"></div>
+
+</div>
+
+
+
+<button
+id="saveTickets"
+class="send"
+>
+Envoyer le panneau de tickets
+</button>
+
+
+<div
+id="ticketResult"
+class="result"
+></div>
+
+</div>
+
+
+
+<!-- PREVIEW TICKET -->
+
+<div class="previewWrap">
+
+<div class="card">
+
+<h2>Aperçu du panneau</h2>
+
+<div class="previewBox">
+
+<div id="ticketPreviewMessage">
+Besoin d'aide ? Clique sur le bouton pour ouvrir un ticket.
+</div>
+
+
+<div class="componentRow">
+
+<div
+class="dcButton"
+id="ticketPreviewButton"
+>
+🎫 Ouvrir un ticket
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ===================== -->
+<!-- ARRIVÉE / DÉPART -->
+<!-- ===================== -->
+
+<section
+id="welcome"
+class="section"
+>
+
+<h1>Arrivée / Départ</h1>
+
+<p class="subtitle">
+Configure les messages automatiques.
+</p>
+
+
+<div class="card">
+
+<label>Serveur Discord</label>
+
+<select id="welcomeGuild"></select>
+
+
+<label>Salon</label>
+
+<select id="welcomeChannel"></select>
+
+
+<label>Message d'arrivée</label>
+
+<textarea id="welcomeMessage">
+Bienvenue {user} sur le serveur ! 🎉
+</textarea>
+
+
+<label>Message de départ</label>
+
+<textarea id="leaveMessage">
+À bientôt {user} 👋
+</textarea>
+
+
+<button
+id="saveWelcome"
+class="send"
+>
+Enregistrer
+</button>
+
+</div>
+
+</section>
+
+
+
+<!-- ===================== -->
+<!-- PARAMÈTRES -->
+<!-- ===================== -->
+
+<section
+id="settings"
+class="section"
+>
+
+<h1>Paramètres</h1>
+
+<p class="subtitle">
+Configuration générale du bot.
+</p>
+
+
+<div class="card">
+
+<h2>Bot Discord</h2>
+
+<p class="placeholder">
+Les serveurs et salons sont récupérés automatiquement depuis Discord.
+</p>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+
+
+<!-- NAVIGATION -->
+
 <script>
-const navButtons=document.querySelectorAll('nav button'),sections=document.querySelectorAll('.section');navButtons.forEach(b=>b.addEventListener('click',()=>{navButtons.forEach(x=>x.classList.remove('active'));sections.forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById(b.dataset.page).classList.add('active')}));
+
+const navButtons =
+document.querySelectorAll('nav button');
+
+const sections =
+document.querySelectorAll('.section');
+
+
+navButtons.forEach(button=>{
+
+button.addEventListener('click',()=>{
+
+navButtons.forEach(x=>
+x.classList.remove('active')
+);
+
+sections.forEach(x=>
+x.classList.remove('active')
+);
+
+button.classList.add('active');
+
+document
+.getElementById(button.dataset.page)
+.classList.add('active');
+
+});
+
+});
+
 </script>
+
+
+<!-- LOGIQUE DU BOT -->
+
 <script src="/app.js"></script>
-</body></html>
+
+</body>
+</html>
