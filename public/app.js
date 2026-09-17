@@ -451,57 +451,50 @@ function loadFields() {
 
 function renderTabs() {
 
-  $('messageTabs').innerHTML =
+  $('messageTabs').innerHTML = state.messages.map((m, i) => `
+    <button
+      type="button"
+      class="msgTab ${i === state.current ? 'active' : ''}"
+      data-msg="${i}"
+    >
+      ${esc(m.name)} ${i + 1}
+    </button>
+  `).join('');
 
-    state.messages.map(
-      (m, i) => `
+  document.querySelectorAll('[data-msg]').forEach(button => {
 
-        <button
-          class="msgTab ${
-            i === state.current
-              ? 'active'
-              : ''
-          }"
-          data-msg="${i}"
-        >
+    button.onclick = async () => {
 
-          ${esc(m.name)} ${i + 1}
+      const newIndex = Number(button.dataset.msg);
 
-        </button>
+      if (newIndex === state.current) {
+        return;
+      }
 
-      `
-    ).join('');
+      // Sauvegarde le message sur lequel on était
+      saveFields();
 
+      // Passe au message choisi
+      state.current = newIndex;
 
-  document
-    .querySelectorAll('[data-msg]')
-    .forEach(button => {
+      const m = cur();
 
-      button.onclick =
-        async () => {
+      // Recharge son serveur et ses salons
+      if (m.guildId) {
+        $('guild').value = m.guildId;
+        await loadGuild(m.guildId);
+      }
 
-          saveFields();
+      // Recharge son contenu
+      loadFields();
 
-          state.current =
-            +button.dataset.msg;
+      // Met à jour l'interface sans rappeler renderAll()
+      renderTabs();
+      renderEditors();
+      updatePreview();
+    };
 
-          const m =
-            cur();
-
-
-          if (m.guildId) {
-
-            await loadGuild(
-              m.guildId
-            );
-          }
-
-
-          loadFields();
-
-          renderAll();
-        };
-    });
+  });
 }
 
 
